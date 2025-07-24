@@ -1,78 +1,211 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19980617&assignment_repo_type=AssignmentRepo)
-# Deployment and DevOps for MERN Applications
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+# MERN Stack Deployment Demo
 
-## Assignment Overview
+This project demonstrates a full MERN stack application deployment with CI/CD pipelines, monitoring, and best practices for production.
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+## 🌟 Live Demo
 
-## Getting Started
+- Frontend: `https://mern-demo-frontend.vercel.app`
+- Backend API: `https://mern-demo-backend.onrender.com`
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
+## 🛠️ Tech Stack
 
-## Files Included
+- **Frontend:**
+  - React with TypeScript
+  - Vite for build tooling
+  - TanStack Query for data fetching
+  - React Router for navigation
+  - Mantine UI components
+  - Tailwind CSS for styling
 
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+- **Backend:**
+  - Node.js with Express
+  - TypeScript
+  - MongoDB with Mongoose
+  - JWT authentication
+  - Winston for logging
+  - Express Validator for input validation
 
-## Requirements
+- **DevOps:**
+  - GitHub Actions for CI/CD
+  - MongoDB Atlas for database
+  - Render for backend hosting
+  - Vercel for frontend hosting
+  - Environment-based configuration
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+## 🚀 Deployment Configuration
 
-## Deployment Platforms
+### MongoDB Atlas Setup
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+1. Create cluster on MongoDB Atlas
+2. Database user credentials:
+   ```
+   Username: mern_app_user
+   Password: <secure_password>
+   ```
+3. Connection string format:
+   ```
+   mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
+   ```
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+### Backend Environment Variables (Render)
 
-## CI/CD Pipeline
+```env
+NODE_ENV=production
+PORT=5000
+MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
+JWT_SECRET=your_jwt_secret_key
+LOG_LEVEL=info
+```
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+### Frontend Environment Variables (Vercel)
 
-## Submission
+```env
+VITE_API_URL=https://mern-demo-backend.onrender.com/api
+```
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## 🔄 CI/CD Pipeline
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+### GitHub Secrets Required
 
-## Resources
+```
+RENDER_TOKEN=<your_render_api_token>
+RENDER_BACKEND_SERVICE_ID=srv-xxx
+VERCEL_TOKEN=<your_vercel_token>
+MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/test
+JWT_SECRET=test_jwt_secret
+```
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+### GitHub Actions Workflows
+
+1. **Backend CI (`backend-ci.yml`)**
+   - Runs on push/PR to backend code
+   - Linting and testing with MongoDB container
+   - TypeScript compilation check
+
+2. **Frontend CI (`frontend-ci.yml`)**
+   - Runs on push/PR to frontend code
+   - Type checking and build verification
+   - Unit tests execution
+
+3. **Backend CD (`backend-cd.yml`)**
+   - Deploys to Render on main branch push
+   - Automatic environment configuration
+   - Health check verification
+
+4. **Frontend CD (`frontend-cd.yml`)**
+   - Deploys to Vercel on main branch push
+   - Production build optimization
+   - Environment variable injection
+
+## 📊 Monitoring Setup
+
+1. **Application Health Checks**
+   - Backend endpoint: `GET /health`
+   - Response format:
+     ```json
+     {
+       "status": "ok",
+       "timestamp": "2024-01-24T12:00:00Z",
+       "version": "1.0.0",
+       "services": {
+         "database": "connected",
+         "api": "operational"
+       }
+     }
+     ```
+
+2. **Logging Configuration**
+   - Production logs stored in:
+     ```
+     /logs/error.log  # Error level logs
+     /logs/combined.log  # All logs
+     ```
+   - Log format:
+     ```json
+     {
+       "level": "info",
+       "timestamp": "2024-01-24T12:00:00Z",
+       "message": "Server started",
+       "meta": {
+         "env": "production",
+         "port": 5000
+       }
+     }
+     ```
+
+## 🔒 Security Measures
+
+1. **API Security**
+   - CORS configuration
+   - Helmet.js HTTP headers
+   - Rate limiting
+   - JWT token validation
+
+2. **Database Security**
+   - Connection pooling
+   - Encrypted credentials
+   - Network access rules
+   - Regular backups
+
+## 🚦 Local Development
+
+1. Clone the repository
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. Install dependencies
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables
+   ```bash
+   # Backend (.env)
+   cp backend/.env.example backend/.env
+   
+   # Frontend (.env)
+   cp frontend/.env.example frontend/.env
+   ```
+
+4. Start development servers
+   ```bash
+   # Start both frontend and backend
+   npm run dev
+   
+   # Start individually
+   npm run dev -w frontend
+   npm run dev -w backend
+   ```
+
+## 📝 Deployment Checklist
+
+- [x] MongoDB Atlas cluster created
+- [x] Backend API deployed to Render
+- [x] Frontend deployed to Vercel
+- [x] Environment variables configured
+- [x] CI/CD pipelines operational
+- [x] Health monitoring setup
+- [x] Security measures implemented
+- [x] Documentation updated
+
+## 📸 Deployment Screenshots
+
+![CI/CD Pipeline](deployment-screenshots/cicd.png)
+![MongoDB Atlas](deployment-screenshots/mongodb.png)
+![Render Dashboard](deployment-screenshots/render.png)
+![Vercel Dashboard](deployment-screenshots/vercel.png)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
