@@ -28,7 +28,7 @@ This project demonstrates a full MERN stack application deployment with CI/CD pi
   - Express Validator for input validation
 
 - **DevOps:**
-  - GitHub Actions for CI/CD
+  - GitHub Actions for CI
   - MongoDB Atlas for database
   - Render for backend hosting
   - Vercel for frontend hosting
@@ -65,39 +65,19 @@ LOG_LEVEL=info
 VITE_API_URL=https://mern-demo-backend.onrender.com/api
 ```
 
-## 🔄 CI/CD Pipeline
-
-### GitHub Secrets Required
-
-```
-RENDER_TOKEN=<your_render_api_token>
-RENDER_BACKEND_SERVICE_ID=srv-xxx
-VERCEL_TOKEN=<your_vercel_token>
-MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/test
-JWT_SECRET=test_jwt_secret
-```
+## 🔄 CI Pipeline
 
 ### GitHub Actions Workflows
 
 1. **Backend CI (`backend-ci.yml`)**
    - Runs on push/PR to backend code
-   - Linting and testing with MongoDB container
    - TypeScript compilation check
+   - Unit tests execution
 
 2. **Frontend CI (`frontend-ci.yml`)**
    - Runs on push/PR to frontend code
    - Type checking and build verification
    - Unit tests execution
-
-3. **Backend CD (`backend-cd.yml`)**
-   - Deploys to Render on main branch push
-   - Automatic environment configuration
-   - Health check verification
-
-4. **Frontend CD (`frontend-cd.yml`)**
-   - Deploys to Vercel on main branch push
-   - Production build optimization
-   - Environment variable injection
 
 ## 📊 Monitoring Setup
 
@@ -186,17 +166,10 @@ JWT_SECRET=test_jwt_secret
 - [x] Backend API deployed to Render
 - [x] Frontend deployed to Vercel
 - [x] Environment variables configured
-- [x] CI/CD pipelines operational
+- [x] CI pipeline operational
 - [x] Health monitoring setup
 - [x] Security measures implemented
 - [x] Documentation updated
-
-## 📸 Deployment Screenshots
-
-![CI/CD Pipeline](deployment-screenshots/cicd.png)
-![MongoDB Atlas](deployment-screenshots/mongodb.png)
-![Render Dashboard](deployment-screenshots/render.png)
-![Vercel Dashboard](deployment-screenshots/vercel.png)
 
 ## 🤝 Contributing
 

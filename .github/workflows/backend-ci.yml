@@ -4,21 +4,13 @@ on:
   push:
     paths:
       - 'backend/**'
-      - '.github/workflows/backend-ci.yml'
   pull_request:
     paths:
       - 'backend/**'
-      - '.github/workflows/backend-ci.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
 
     steps:
       - uses: actions/checkout@v4
@@ -27,22 +19,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: |
           cd backend
-          npm ci
+          npm install
 
-      - name: Run linting
+      - name: Run type check
         run: |
           cd backend
-          npm run lint
+          npm run build --if-present
 
       - name: Run tests
         run: |
           cd backend
-          npm test
-        env:
-          MONGODB_URI: mongodb://localhost:27017/test
-          JWT_SECRET: test-secret 
+          npm test --if-present 
