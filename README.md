@@ -59,7 +59,7 @@ This project demonstrates a full MERN stack application deployment with monitori
    ```env
    NODE_ENV=production
    PORT=5000
-   MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
+   MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.mongodb.net/mern-demo
    JWT_SECRET=your_jwt_secret_key
    LOG_LEVEL=info
    ```
