@@ -2,7 +2,7 @@
 
 # MERN Stack Deployment Demo
 
-This project demonstrates a full MERN stack application deployment with CI/CD pipelines, monitoring, and best practices for production.
+This project demonstrates a full MERN stack application deployment with monitoring and best practices for production.
 
 ## 🌟 Live Demo
 
@@ -28,7 +28,6 @@ This project demonstrates a full MERN stack application deployment with CI/CD pi
   - Express Validator for input validation
 
 - **DevOps:**
-  - GitHub Actions for CI
   - MongoDB Atlas for database
   - Render for backend hosting
   - Vercel for frontend hosting
@@ -49,35 +48,33 @@ This project demonstrates a full MERN stack application deployment with CI/CD pi
    mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
    ```
 
-### Backend Environment Variables (Render)
+### Backend Deployment (Render)
 
-```env
-NODE_ENV=production
-PORT=5000
-MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
-JWT_SECRET=your_jwt_secret_key
-LOG_LEVEL=info
-```
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Configure build settings:
+   - Build Command: `cd backend && npm install && npm run build`
+   - Start Command: `cd backend && npm start`
+4. Set environment variables:
+   ```env
+   NODE_ENV=production
+   PORT=5000
+   MONGODB_URI=mongodb+srv://mern_app_user:<password>@cluster0.xxxxx.mongodb.net/mern-demo
+   JWT_SECRET=your_jwt_secret_key
+   LOG_LEVEL=info
+   ```
 
-### Frontend Environment Variables (Vercel)
+### Frontend Deployment (Vercel)
 
-```env
-VITE_API_URL=https://mern-demo-backend.onrender.com/api
-```
-
-## 🔄 CI Pipeline
-
-### GitHub Actions Workflows
-
-1. **Backend CI (`backend-ci.yml`)**
-   - Runs on push/PR to backend code
-   - TypeScript compilation check
-   - Unit tests execution
-
-2. **Frontend CI (`frontend-ci.yml`)**
-   - Runs on push/PR to frontend code
-   - Type checking and build verification
-   - Unit tests execution
+1. Import your GitHub repository to Vercel
+2. Configure build settings:
+   - Framework Preset: Vite
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+3. Set environment variables:
+   ```env
+   VITE_API_URL=https://mern-demo-backend.onrender.com/api
+   ```
 
 ## 📊 Monitoring Setup
 
@@ -166,7 +163,6 @@ VITE_API_URL=https://mern-demo-backend.onrender.com/api
 - [x] Backend API deployed to Render
 - [x] Frontend deployed to Vercel
 - [x] Environment variables configured
-- [x] CI pipeline operational
 - [x] Health monitoring setup
 - [x] Security measures implemented
 - [x] Documentation updated
